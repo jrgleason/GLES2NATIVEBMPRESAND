@@ -236,7 +236,14 @@ int *pixels;
 int len = 0;
 int pixelWidth = 2;
 int pixelHeight = 2;
+GLubyte *buffer;
 
+void generateBuffer(){
+    buffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
+    int c;
+    for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
+      buffer[c] = pixels[c];
+}
 void setPixels(int *i){
 	pixels = i;
 }
@@ -284,11 +291,11 @@ void renderFrameLine() {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
-    int c;
-    for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
-      byteBuffer[c] = pixels[c];
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, byteBuffer);
+//    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
+//        int c;
+//        for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
+//          byteBuffer[c] = pixels[c];
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

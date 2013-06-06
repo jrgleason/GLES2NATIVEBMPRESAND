@@ -37,10 +37,11 @@ JNIEXPORT void JNICALL Java_com_gleason_gl_nat_Native_initBMPTexture(JNIEnv * en
 //		}
 //
 	}
-	setPixels(body);
+
 	setPixelHeight(height);
 	setPixelWidth(width);
 	setLen(len);
+	setPixels(body);
 	(*env)->ReleaseIntArrayElements(env, pixels, body, 0);
 }
 
