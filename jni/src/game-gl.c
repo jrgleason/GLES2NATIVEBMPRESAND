@@ -33,7 +33,6 @@ GLbyte vShaderStr[] = "attribute vec4 vPosition;   \n"
 "   fragColor = inColor; \n"
 "   v_texCoord = texPosition; \n"
 "}                           \n";
-                                          \n";
 GLbyte fShaderStr[] =
    "precision mediump float;                            \n"
    "varying vec2 v_texCoord;                            \n"
