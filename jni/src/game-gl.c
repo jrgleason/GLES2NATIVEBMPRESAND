@@ -260,61 +260,69 @@ void setPixelHeight(int i){
 }
 
 static GLuint textureId = 0;
+int render = 1;
+
+void renderMe(){
+	if(z>1.0f){
+	        z = 0.0f;
+	    }
+	    else{
+	        z = z+.01;
+	    }
+	    if (f > 359.0f) {
+	        f = 0.0f;
+	    } else {
+	        f = f + 1.0f;
+	    }
+	    GLubyte bytePixChar[4 * 3]={
+	          255, 0, 0, //red
+	          0, 255, 0, //green
+	          0, 0, 255,  //blue
+	          255, 255, 0  //yellow
+	     };
+	    int o;
+
+	      GLfloat texC[8] = {
+	        0.0, 0.0,
+	        1.0, 0.0,
+	        0.0, 1.0,
+	        1.0, 1.0
+
+	      };
+	    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	    glGenTextures(1, &textureId);
+	    glBindTexture(GL_TEXTURE_2D, textureId);
+	//    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
+	//        int c;
+	//        for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
+	//          byteBuffer[c] = pixels[c];
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	    glXRotate(0.0f);
+		glYRotate(0.0f);
+		glZRotate(0.0f);
+		glFrustumf(0.1f, 10.0f);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, gObj);
+		glVertexAttribPointer(textCoordLoc, 2, GL_FLOAT, GL_FALSE, 0, texC);
+
+		glUniform1i(sampler, 0 );
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(textCoordLoc);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		render = 0;
+}
 
 void renderFrameLine() {
-    if(z>1.0f){
-        z = 0.0f;
+    if(render == 1){
+    	renderMe();
     }
-    else{
-        z = z+.01;
-    }
-    if (f > 359.0f) {
-        f = 0.0f;
-    } else {
-        f = f + 1.0f;
-    }
-    GLubyte bytePixChar[4 * 3]={
-          255, 0, 0, //red
-          0, 255, 0, //green
-          0, 0, 255,  //blue
-          255, 255, 0  //yellow
-     };
-    int o;
-
-      GLfloat texC[8] = {
-        0.0, 0.0,
-        1.0, 0.0,
-        0.0, 1.0,
-        1.0, 1.0
-
-      };
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glGenTextures(1, &textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-//    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
-//        int c;
-//        for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
-//          byteBuffer[c] = pixels[c];
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glXRotate(0.0f);
-	glYRotate(0.0f);
-	glZRotate(0.0f);
-	glFrustumf(0.1f, 10.0f);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, gObj);
-	glVertexAttribPointer(textCoordLoc, 2, GL_FLOAT, GL_FALSE, 0, texC);
-
-	glUniform1i(sampler, 0 );
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(textCoordLoc);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void ShutDown(){
-	if(textureId != 0)
-		glDeleteTextures ( 1,&textureId);
-	glDeleteProgram ( programObject );
+//	if(textureId != 0)
+//		glDeleteTextures ( 1,&textureId);
+//	glDeleteProgram ( programObject );
 }
