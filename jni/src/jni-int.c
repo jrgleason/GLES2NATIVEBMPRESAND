@@ -42,7 +42,7 @@ JNIEXPORT void JNICALL Java_com_gleason_gl_nat_Native_initBMPTexture(JNIEnv * en
 	setPixelWidth(width);
 	setLen(len);
 	setPixels(body);
-	(*env)->ReleaseIntArrayElements(env, pixels, body, 0);
+//	(*env)->ReleaseIntArrayElements(env, pixels, body, 0);
 }
 
 JNIEXPORT void JNICALL Java_com_gleason_gl_nat_Native_shutDown(JNIEnv * env, jclass envClass)
