@@ -322,7 +322,7 @@ void renderFrameLine() {
 }
 
 void ShutDown(){
-//	if(textureId != 0)
-//		glDeleteTextures ( 1,&textureId);
-//	glDeleteProgram ( programObject );
+	if(textureId != 0)
+		glDeleteTextures ( 1,&textureId);
+	glDeleteProgram ( programObject );
 }
