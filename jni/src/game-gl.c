@@ -292,11 +292,11 @@ void renderMe(){
 	    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	    glGenTextures(1, &textureId);
 	    glBindTexture(GL_TEXTURE_2D, textureId);
-	//    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
-	//        int c;
-	//        for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
-	//          byteBuffer[c] = pixels[c];
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	    GLubyte *byteBuffer = (GLubyte *)malloc(pixelWidth * pixelHeight * 3);
+	        int c;
+	        for(c = 0; c < pixelWidth * pixelHeight * 3; c++)
+	          byteBuffer[c] = pixels[c];
+	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pixelWidth, pixelHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, byteBuffer);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -316,9 +316,9 @@ void renderMe(){
 }
 
 void renderFrameLine() {
-    if(render == 1){
+//    if(render == 1){
     	renderMe();
-    }
+//    }
 }
 
 void ShutDown(){
